@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { BsArrowBarLeft } from "react-icons/bs";
 import { HiOutlineMenu } from "react-icons/hi"; // Icono hamburguesa
@@ -9,10 +8,9 @@ interface NavbarProps {
 }
 
 export function Navbar({ open, setSidebarOpen }: NavbarProps) {
-  const { theme } = useTheme();
 
   return (
-    <div className="w-full flex items-center p-3 justify-between bg-secondary2">
+    <div className="w-full flex items-center h-16 p-3 justify-between bg-secondary fixed top-0 left-0 z-40">
       {/* Icono del Hamburguesa */}
       <div>
         <button

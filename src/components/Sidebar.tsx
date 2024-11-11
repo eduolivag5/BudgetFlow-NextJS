@@ -24,14 +24,15 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
 
   return (
     <div
-      className={`${open ? "translate-x-0" : "-translate-x-full"}
-        w-full md:w-72 p-5 flex flex-col h-full absolute top-0 left-0 justify-between transition-transform duration-300 ease-in-out z-50 bg-secondary2`}
-    >
+  className={`${open ? "translate-x-0" : "-translate-x-full"} 
+    w-full md:w-72 p-5 flex flex-col h-full fixed top-0 left-0 justify-between 
+    transition-transform duration-300 ease-in-out z-50 bg-secondary`}
+>
       <div>
         <div className="flex items-center justify-between">
           <h1 className={`font-bold text-2xl`}>BudgetFlow</h1>
 
-          <button className="md:hidden text-3xl" onClick={() => setOpen(!open)}>
+          <button className="text-3xl" onClick={() => setOpen(!open)}>
             <BsArrowBarLeft />
           </button>
         </div>
@@ -40,15 +41,14 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
           {Menus.map((Menu, index) => (
             <li
               key={index}
-              className={`flex gap-4 p-2 cursor-pointer text-sm items-center`}
+              className={`p-2 cursor-pointer text-sm items-center`}
             >
-              <span className="text-lg">{Menu.icon}</span>
-              <Link
-                className={`${pathname == Menu.link && "text-primary font-semibold"}`}
-                href={Menu.link}
-              >
-                {Menu.title}
+              <Link className={`flex gap-4 items-center ${pathname == Menu.link && "text-primary font-semibold"}`}
+                href={Menu.link}>
+                <span className="text-lg">{Menu.icon}</span>
+                <span>{Menu.title}</span>
               </Link>
+              
             </li>
           ))}
         </ul>

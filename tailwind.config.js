@@ -13,12 +13,6 @@ module.exports = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
-      colors: {
-        secondary: {
-          light: "#e6eaf2", // Este es el color claro por defecto
-          dark: "#0f5cd1", // Este es el color oscuro
-        },
-      },
     },
   },
   darkMode: "class",
@@ -54,7 +48,7 @@ module.exports = {
         light: {
           colors: {
             primary: "#6366f1",
-            secondary2: "#e6eaf2",
+            secondary: "#f1f3f5",
           },
           layout: {
             hoverOpacity: 0.8, //  this value is applied as opacity-[value] when the component is hovered
@@ -74,7 +68,7 @@ module.exports = {
         dark: {
           colors: {
             primary: "#6366f1",
-            secondary2: "#0f1114",
+            secondary: "#0f1114",
           },
           layout: {
             hoverOpacity: 0.9, //  this value is applied as opacity-[value] when the component is hovered

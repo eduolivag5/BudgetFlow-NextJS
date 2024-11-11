@@ -25,13 +25,13 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <div className="flex">
             {/* Sidebar */}
             <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+            <Navbar open={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
             {/* Contenido principal */}
             <main
-              className={`transition-all duration-300 w-full ${sidebarOpen && "md:ml-72"}`}
-            >
-              <Navbar open={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-              <div className="p-8">{children}</div>
+              className={`mt-16 p-4 md:p-8 transition-all duration-300 w-full ${sidebarOpen && "md:ml-72"}`}
+            >              
+              {children}
             </main>
           </div>
         </Providers>
