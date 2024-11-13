@@ -47,7 +47,7 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            primary: "#6366f1",
+            primary: "#4F46E5",
             secondary: "#f1f3f5",
           },
           layout: {
@@ -67,7 +67,7 @@ module.exports = {
         },
         dark: {
           colors: {
-            primary: "#6366f1",
+            primary: "#4F46E5",
             secondary: "#0f1114",
           },
           layout: {

@@ -3,8 +3,10 @@
 import { FaSave, FaTrash } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BudgetProgress from "./BudgetProgress";
+import AddTransactionForm from "../transactions/addTransactionForm";
+import { Progress } from "@nextui-org/react";
 
 const BudgetPage = () => {
     const [budget, setBudget] = useState<number | null>(null); 
@@ -24,6 +26,18 @@ const BudgetPage = () => {
         setInputValue("");
         setProgress(0);
     };
+
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          setProgress((v) => (v >= 100 ? 0 : v + 10));
+        }, 10000);
+    
+        return () => clearInterval(interval);
+      }, []);
+
+
 
     return (
         <div className='md:w-1/2 mx-auto'>
@@ -62,20 +76,42 @@ const BudgetPage = () => {
                         </button>
                     )}
                 </div>
-
-                <button onClick={() => setProgress(40)}
-                    className="flex text-sm w-full justify-center items-center gap-2 md:px-5 p-2 font-semibold uppercase rounded-md bg-indigo-600"
-                >
-                    <MdAdd />
-                    <span>Añadir transacciones</span>
-                </button>
+                
             </div>
 
             {budget !== null && (
-                <div className="mt-4">
-                    <BudgetProgress percentage={progress} />
+                <div className="space-y-2">
+                    <div className="mt-4 bg-secondary p-3 md:p-6 rounded-lg shadow-md space-y-2">
+                        {/* Barra de progreso centrada */}
+                        <div className="text-center flex items-center space-x-2">                            
+                            <Progress
+                                aria-label="Descargando..."
+                                size="md"
+                                value={progress}
+                                color="success"
+                                showValueLabel={false}
+                                className="mx-auto"
+                            />
+                            <span className="font-bold text-lg md:text-xl">{progress}%</span>
+                        </div>
+                    
+                        {/* Información de presupuesto gastado y disponible */}
+                        <div className="flex justify-around text-center items-center">
+                            <div className="flex flex-col items-center">
+                                <p className="font-semibold text-sm md:text-lg uppercase tracking-wide">Gastado</p>
+                                <span className="md:text-lg font-medium text-gray-500">1.500 €</span>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <p className="font-semibold text-sm md:text-lg uppercase tracking-wide">Disponible</p>
+                                <span className="md:text-lg font-medium text-gray-500">1.500 €</span>
+                            </div>
+                        </div>
+                    </div>
+                    <AddTransactionForm />
                 </div>
             )}
+
+            
         </div>
     );
 };

@@ -16,7 +16,7 @@ export default function BudgetProgress({ percentage }: { percentage: number }) {
     const strokeDashoffset = circumference - (animatedPercentage / 100) * circumference;
 
     return (
-        <div id="budgetProgressGraph" className="h-80">
+        <div id="budgetProgressGraph" className="h-full">
             <svg className="w-full h-full" viewBox="0 0 120 120">
                 <defs>
                     <linearGradient id="progress-gradient" x1="1" y1="0" x2="0" y2="1">
