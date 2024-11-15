@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { Card, Select, SelectItem } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Select, SelectItem } from '@nextui-org/react';
 
 interface FormValues {
     initialInvestment: number;
@@ -65,115 +65,119 @@ export default function CompoundInterestCalculator() {
     };
     
     return (
-        <div className='md:w-1/2 mx-auto'>
-            <h1 className='font-bold text-3xl mb-8'>Calculadora de Interés Compuesto</h1>
-            <form className='space-y-4' onSubmit={handleSubmit(calculateCompoundInterest)}>
-                
-                {/* Paso 1: Inversión Inicial */}
-                <div className='border border-secondary rounded-lg p-3 space-y-2'>
-                    <div>
-                        <p className='font-semibold text-lg'>Inversión Inicial</p>
-                        <label htmlFor='initialInvestment' className='text-sm text-gray-500'>Monto de dinero que tiene disponible para invertir inicialmente.</label>
-                    </div>
-                    <input id="initialInvestment"
-                        
-                        step="0.01"
-                        className={`bg-secondary p-2 rounded-md w-full focus:outline-none ${errors.initialInvestment && 'border border-red-800'}`}
-                        {...register('initialInvestment', { required: true, valueAsNumber: true })}
-                    />
-                </div>
-
-                {/* Paso 2: Contribución */}
-                <div className='border border-secondary rounded-lg p-3 space-y-2'>
-                    <div>
-                        <p className='font-semibold text-lg'>Contribución mensual</p>
-                        <label htmlFor='monthlyContribution' className='text-sm text-gray-500'>
-                            Monto que tiene previsto agregar al capital cada mes, o un número negativo para el monto que tiene previsto extraer cada mes.
-                        </label>
-                    </div>
-                    <input id="monthlyContribution"
-                        
-                        step="0.01"
-                        className={`bg-secondary rounded-md w-full focus:outline-none p-2 ${errors.monthlyContribution && 'border border-red-800'}`}
-                        {...register('monthlyContribution', { required: true, valueAsNumber: true })}
-                    />
-
-                    <div>
-                        <p className='font-semibold text-lg'>Cantidad de tiempo en años</p>
-                        <label htmlFor='timeYears' className='text-sm text-gray-500'>
-                            Cantidad de tiempo, en años, que tiene previsto ahorrar.
-                        </label>
-                    </div>
-                    <div className="relative w-full">
-                        <input
-                            id="timeYears"
-                            {...register('timeYears', { required: true, valueAsNumber: true, min: 1 })}
-                            className={`bg-secondary rounded-md w-full focus:outline-none p-2 pr-10 ${errors.timeYears ? 'border border-red-800' : ''}`}
-                        />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">años</span>
-                    </div>
-                </div>
-
-                {/* Paso 3: Tasa de Interés */}
-                <div className='border border-secondary rounded-lg p-3 space-y-2'>
-                    <div>
-                        <p className='font-semibold text-lg'>Tasa de interés estimada</p>
-                        <label htmlFor="interestRate" className='text-sm text-gray-500'>
-                            Su tasa de interés anual estimada.
-                        </label>
-                    </div>
-                    <div className="relative w-full">
-                        <input
-                            id="interestRate"
-                            {...register('interestRate', { required: true, valueAsNumber: true, min: 1 })}
-                            className={`bg-secondary rounded-md w-full focus:outline-none p-2 pr-10 ${errors.interestRate ? 'border border-red-800' : ''}`}
-                        />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
-                    </div>
-                </div>
-
-                {/* Paso 4: Capitalización */}
-                <div className='border border-secondary rounded-lg p-3 space-y-2'>
-                    <div>
-                        <p className='font-semibold text-lg'>Frecuencia de capitalización</p>
-                        <label htmlFor='compoundingFrequency' className='text-sm text-gray-500'>
-                            Cantidad de veces por año que se capitalizará el interés.
-                        </label>
-                    </div>
-                    <Select radius='sm' aria-labelledby='compoundingFrequency' id='compoundingFrequency'
-                        {...register('compoundingFrequency', { required: true })}
-                        className={`w-full focus:outline-none`}
-                    >
-                        <SelectItem key="1" value="1">Anualmente</SelectItem>
-                        <SelectItem key="4" value="4">Trimestralmente</SelectItem>
-                        <SelectItem key="12" value="12">Mensualmente</SelectItem>
-                        <SelectItem key="365" value="365">Diariamente</SelectItem>
-                    </Select>
-                </div>
-
-                <button type="submit" className='bg-indigo-500 text-white w-full p-2 rounded-md uppercase font-semibold'>
-                    Calcular
-                </button>
-            </form>
-
-            {result && (
-                <div ref={resultRef} id='compoundInterestResult' className='p-5 mt-5 rounded-md bg-secondary'>
-                    <div className='flex'>
-                        <div className='flex flex-1 flex-col space-y-4 items-center justify-center'>
-                            <p className='text-sm md:text-lg uppercase font-semibold'>Inversión total</p>
-                            <span className='font-bold text-green-400 text-xl md:text-2xl'>
-                                {result.totalInvested}$
-                            </span>
+        <Card className='p-0 shadow-none bg-transparent'>
+            <CardHeader className='px-0'>
+                <span className="font-bold text-2xl md:text-3xl">Calculadora de Interés Compuesto</span>
+            </CardHeader>
+            <CardBody className='p-0'>
+                <form className='space-y-4' onSubmit={handleSubmit(calculateCompoundInterest)}>
+                    
+                    {/* Paso 1: Inversión Inicial */}
+                    <div className='border border-secondary rounded-lg p-3 space-y-2'>
+                        <div>
+                            <p className='font-semibold text-lg'>Inversión Inicial</p>
+                            <label htmlFor='initialInvestment' className='text-sm text-gray-500'>Monto de dinero que tiene disponible para invertir inicialmente.</label>
                         </div>
-                        <div className='flex flex-1 flex-col space-y-4 items-center justify-center'>
-                            <p className='text-sm md:text-lg uppercase font-semibold'>Profit</p>
-                            <span className='font-bold text-green-400 text-xl md:text-2xl'>
-                                {result.generatedAmount}$
-                            </span>
+                        <input id="initialInvestment"
+                            
+                            step="0.01"
+                            className={`bg-secondary p-2 rounded-md w-full focus:outline-none ${errors.initialInvestment && 'border border-red-800'}`}
+                            {...register('initialInvestment', { required: true, valueAsNumber: true })}
+                        />
+                    </div>
+
+                    {/* Paso 2: Contribución */}
+                    <div className='border border-secondary rounded-lg p-3 space-y-2'>
+                        <div>
+                            <p className='font-semibold text-lg'>Contribución mensual</p>
+                            <label htmlFor='monthlyContribution' className='text-sm text-gray-500'>
+                                Monto que tiene previsto agregar al capital cada mes, o un número negativo para el monto que tiene previsto extraer cada mes.
+                            </label>
+                        </div>
+                        <input id="monthlyContribution"
+                            
+                            step="0.01"
+                            className={`bg-secondary rounded-md w-full focus:outline-none p-2 ${errors.monthlyContribution && 'border border-red-800'}`}
+                            {...register('monthlyContribution', { required: true, valueAsNumber: true })}
+                        />
+
+                        <div>
+                            <p className='font-semibold text-lg'>Cantidad de tiempo en años</p>
+                            <label htmlFor='timeYears' className='text-sm text-gray-500'>
+                                Cantidad de tiempo, en años, que tiene previsto ahorrar.
+                            </label>
+                        </div>
+                        <div className="relative w-full">
+                            <input
+                                id="timeYears"
+                                {...register('timeYears', { required: true, valueAsNumber: true, min: 1 })}
+                                className={`bg-secondary rounded-md w-full focus:outline-none p-2 pr-10 ${errors.timeYears ? 'border border-red-800' : ''}`}
+                            />
+                            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">años</span>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+
+                    {/* Paso 3: Tasa de Interés */}
+                    <div className='border border-secondary rounded-lg p-3 space-y-2'>
+                        <div>
+                            <p className='font-semibold text-lg'>Tasa de interés estimada</p>
+                            <label htmlFor="interestRate" className='text-sm text-gray-500'>
+                                Su tasa de interés anual estimada.
+                            </label>
+                        </div>
+                        <div className="relative w-full">
+                            <input
+                                id="interestRate"
+                                {...register('interestRate', { required: true, valueAsNumber: true, min: 1 })}
+                                className={`bg-secondary rounded-md w-full focus:outline-none p-2 pr-10 ${errors.interestRate ? 'border border-red-800' : ''}`}
+                            />
+                            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
+                        </div>
+                    </div>
+
+                    {/* Paso 4: Capitalización */}
+                    <div className='border border-secondary rounded-lg p-3 space-y-2'>
+                        <div>
+                            <p className='font-semibold text-lg'>Frecuencia de capitalización</p>
+                            <label htmlFor='compoundingFrequency' className='text-sm text-gray-500'>
+                                Cantidad de veces por año que se capitalizará el interés.
+                            </label>
+                        </div>
+                        <Select radius='sm' aria-labelledby='compoundingFrequency' id='compoundingFrequency'
+                            {...register('compoundingFrequency', { required: true })}
+                            className={`w-full focus:outline-none`}
+                        >
+                            <SelectItem key="1" value="1">Anualmente</SelectItem>
+                            <SelectItem key="4" value="4">Trimestralmente</SelectItem>
+                            <SelectItem key="12" value="12">Mensualmente</SelectItem>
+                            <SelectItem key="365" value="365">Diariamente</SelectItem>
+                        </Select>
+                    </div>
+
+                    <button type="submit" className='bg-primary text-white w-full p-2 rounded-md uppercase font-semibold'>
+                        Calcular
+                    </button>
+                </form>
+
+                {result && (
+                    <div ref={resultRef} id='compoundInterestResult' className='p-5 mt-5 rounded-md bg-secondary'>
+                        <div className='flex'>
+                            <div className='flex flex-1 flex-col space-y-4 items-center justify-center'>
+                                <p className='text-sm md:text-lg uppercase font-semibold'>Inversión total</p>
+                                <span className='font-bold text-green-400 text-xl md:text-2xl'>
+                                    {result.totalInvested}$
+                                </span>
+                            </div>
+                            <div className='flex flex-1 flex-col space-y-4 items-center justify-center'>
+                                <p className='text-sm md:text-lg uppercase font-semibold'>Profit</p>
+                                <span className='font-bold text-green-400 text-xl md:text-2xl'>
+                                    {result.generatedAmount}$
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </CardBody>
+        </Card>
     );
 }

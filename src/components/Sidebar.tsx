@@ -24,10 +24,10 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
 
   return (
     <div
-  className={`${open ? "translate-x-0" : "-translate-x-full"} 
-    w-full md:w-72 p-5 flex flex-col h-full fixed top-0 left-0 justify-between 
-    transition-transform duration-300 ease-in-out z-50 bg-secondary`}
->
+      className={`${open ? "translate-x-0" : "-translate-x-full"} 
+      w-full md:w-72 p-5 flex flex-col h-full fixed top-0 left-0 justify-between 
+      transition-transform duration-300 ease-in-out z-50 bg-secondary`}
+    >
       <div>
         <div className="flex items-center justify-between">
           <h1 className={`font-bold text-2xl`}>BudgetFlow</h1>

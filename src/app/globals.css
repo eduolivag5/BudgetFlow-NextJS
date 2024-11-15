@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  margin: 0; /* Asegura que no haya márgenes predeterminados */
+}
+
 * {
   font-family: "Inter", sans-serif;
+}
+
+/* Tema claro: de gris claro a gris más oscuro */
+html.light {
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d1d1d1 100%);
+  background-size: 100% 100%; /* Esto hace que el fondo se adapte a la altura de la pantalla */
+  min-height: 100%; /* Asegura que el fondo se extienda a toda la altura */
+}
+
+/* Tema oscuro: de negro a un índigo muy oscuro pero visible */
+html.dark {
+  background: linear-gradient(to bottom, #000000 0%, #02021b 100%);
+  background-size: 100% 100%; /* Evita la repetición del fondo */
+  min-height: 100%; /* Asegura que el fondo se extienda a toda la altura */
 }

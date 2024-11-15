@@ -17,12 +17,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
       <NextThemesProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem={true}
-      >
-        {children}
-      </NextThemesProvider>
+  attribute="class" // Asegúrate de usar "class" aquí
+  value={{
+    light: "light", // Clase para el tema claro
+    dark: "dark",   // Clase para el tema oscuro
+  }}
+  defaultTheme="dark"
+  enableSystem={true}
+>
+  {children}
+</NextThemesProvider>
+
     </NextUIProvider>
   );
 }

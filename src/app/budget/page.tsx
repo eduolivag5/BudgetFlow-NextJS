@@ -1,118 +1,117 @@
-"use client";
+"use client"
 
+import React, { useState, useEffect } from "react";
+import AddTransactionForm from "../transactions/addTransactionForm";
+import { Button, Card, CardBody, CardHeader, Input, Progress } from "@nextui-org/react";
+import useBudgetStore from "../../store/useBudgetStore";
 import { FaSave, FaTrash } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
-
-import React, { useEffect, useState } from "react";
-import BudgetProgress from "./BudgetProgress";
-import AddTransactionForm from "../transactions/addTransactionForm";
-import { Progress } from "@nextui-org/react";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import TransactionsList from "../transactions/transactionsList";
+import TransactionsListTable from "../transactions/transactionsListTable";
 
 const BudgetPage = () => {
-    const [budget, setBudget] = useState<number | null>(null); 
-    const [progress, setProgress] = useState<number>(0);
-    const [inputValue, setInputValue] = useState(""); 
+    const { budget, disponible, gastado, progress, setBudget, deleteBudget } = useBudgetStore();
+    
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [inputValue, setInputValue] = useState("");
+
+    // Establecer el valor inicial del input con el presupuesto guardado
+    useEffect(() => {
+        setInputValue(budget.toString());
+    }, [budget]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
-    const handleSaveBudget = () => {
-        setBudget(Number(inputValue));
-    };
-
-    const handleDeleteBudget = () => {
-        setBudget(null);
+    const confirmDeleteBudget = () => {
+        deleteBudget();
         setInputValue("");
-        setProgress(0);
+        setIsConfirmationModalOpen(false);
     };
-
-
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-          setProgress((v) => (v >= 100 ? 0 : v + 10));
-        }, 10000);
-    
-        return () => clearInterval(interval);
-      }, []);
-
-
 
     return (
-        <div className='md:w-1/2 mx-auto'>
-            <h1 className='font-bold text-3xl mb-8'>Presupuesto</h1>
-
+        <Card className='p-0 shadow-none bg-transparent'>
+            <CardHeader className="px-0">
+                <span className="font-bold text-2xl md:text-3xl">Presupuesto</span>
+            </CardHeader>            
+            <CardBody className="p-0">
             <div className="flex flex-col md:flex-row justify-between gap-2">
-                <div className="space-y-2 w-full">
-                    <div className="relative">
-                        <input
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            className="p-2 pl-4 pr-8 bg-secondary w-full rounded-md focus:outline-none"
-                            placeholder="Introduce el valor"
-                        />
-                        <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            €
-                        </span>
-                    </div>
-                </div>
+                <Input
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    placeholder="Introduce el presupuesto"
+                    radius="sm"
+                />
 
-                <div className="flex flex-grow gap-2 text-sm">
+                <div className="flex flex-grow gap-2 text-sm text-white">
                     <button 
                         className="flex flex-1 justify-center items-center gap-2 md:px-5 p-2 font-semibold uppercase rounded-md bg-indigo-600"
-                        onClick={handleSaveBudget}
+                        onClick={() => setBudget(Number(inputValue))}
                     >
                         <FaSave />
-                        <span className="">Guardar</span>
+                        <span>Guardar</span>
                     </button>
-                    {budget !== null && (
+                    {budget !== 0 && (
                         <button 
                             className="flex flex-1 justify-center items-center gap-2 md:px-5 p-2 font-semibold uppercase rounded-md bg-red-600"
-                            onClick={handleDeleteBudget}
+                            onClick={() => setIsConfirmationModalOpen(true)}
                         >
                             <FaTrash />
-                            <span className="">Eliminar</span>
+                            <span>Eliminar</span>
                         </button>
                     )}
                 </div>
-                
             </div>
 
-            {budget !== null && (
+            {budget !== 0 && (
                 <div className="space-y-2">
                     <div className="mt-4 bg-secondary p-3 md:p-6 rounded-lg shadow-md space-y-2">
-                        {/* Barra de progreso centrada */}
                         <div className="text-center flex items-center space-x-2">                            
                             <Progress
-                                aria-label="Descargando..."
+                                aria-label="Progreso"
                                 size="md"
                                 value={progress}
-                                color="success"
+                                color={progress > 100 ? "default" : "success"}
                                 showValueLabel={false}
                                 className="mx-auto"
                             />
-                            <span className="font-bold text-lg md:text-xl">{progress}%</span>
+                            <span className="font-bold text-lg md:text-xl">{progress.toFixed(2)}%</span>
                         </div>
-                    
-                        {/* Información de presupuesto gastado y disponible */}
                         <div className="flex justify-around text-center items-center">
                             <div className="flex flex-col items-center">
-                                <p className="font-semibold text-sm md:text-lg uppercase tracking-wide">Gastado</p>
-                                <span className="md:text-lg font-medium text-gray-500">1.500 €</span>
+                                <p className="font-semibold text-sm md:text-lg uppercase">Gastado</p>
+                                <span className="md:text-lg font-medium text-gray-500">{gastado.toFixed(2)} €</span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <p className="font-semibold text-sm md:text-lg uppercase tracking-wide">Disponible</p>
-                                <span className="md:text-lg font-medium text-gray-500">1.500 €</span>
+                                <p className="font-semibold text-sm md:text-lg uppercase">Disponible</p>
+                                <span className={`md:text-lg font-medium ${disponible <= 0 ? 'text-red-500' : 'text-gray-500' }`}>
+                                    {disponible.toFixed(2)} €
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <AddTransactionForm />
+
+                    <div>
+                        <TransactionsListTable />
+                    </div>
+                    
                 </div>
             )}
 
             
-        </div>
+
+            <ConfirmationModal
+                isOpen={isConfirmationModalOpen}
+                onClose={() => setIsConfirmationModalOpen(false)}
+                onConfirm={confirmDeleteBudget}
+                title="Eliminar Presupuesto"
+                message="¿Estás seguro? Esta acción no se puede deshacer."
+            />
+
+            </CardBody>
+        </Card>
     );
 };
 

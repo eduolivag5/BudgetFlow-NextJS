@@ -29,9 +29,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
             {/* Contenido principal */}
             <main
-              className={`mt-16 p-4 md:p-8 transition-all duration-300 w-full ${sidebarOpen && "md:ml-72"}`}
+              className={`mt-16 p-2 md:p-8 w-full transition-all duration-300 ${sidebarOpen && "md:ml-72"}`}
             >              
-              {children}
+              <div className="md:w-2/3 mx-auto mb-10">
+                {children}
+              </div>
+              
             </main>
           </div>
         </Providers>
