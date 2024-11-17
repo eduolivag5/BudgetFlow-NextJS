@@ -15,7 +15,6 @@ interface BudgetState {
     deleteBudget: () => void;
 }
 
-
 const loadState = (): BudgetState => {
     const savedState = localStorage.getItem("budgetState");
     return savedState
@@ -28,7 +27,6 @@ const loadState = (): BudgetState => {
               transacciones: [],
           };
 };
-
 
 const useBudgetStore = create<BudgetState>((set) => ({
     ...loadState(), 
@@ -50,75 +48,109 @@ const useBudgetStore = create<BudgetState>((set) => ({
         }),
     
 
-    addTransaction: (transaction) =>
-        set((state) => {
-            const transactionAmount = parseFloat(transaction.amount.toString()); // Convertir a número
-            
-            const newTransaction = {
-                ...transaction,
-                id: uuidv4(),
-            };
-    
-            const newGastado = state.gastado + transactionAmount;
-            const newProgress = (newGastado / state.budget) * 100;
-            const newDisponible = state.budget - newGastado;
-    
-            const newState = {
-                ...state,
-                transacciones: [...state.transacciones, newTransaction],
-                gastado: newGastado,
-                disponible: newDisponible,
-                progress: newProgress,
-            };
-    
-            localStorage.setItem("budgetState", JSON.stringify(newState));
-            return newState;
-        }),
+        addTransaction: (transaction) =>
+            set((state) => {
+                const transactionAmount =
+                    transaction.type === "Gasto"
+                        ? transaction.amount
+                        : -transaction.amount; // Sumar si es gasto, restar si es ingreso
         
-
-    editTransaction: (updatedTransaction) =>
-        set((state) => {
-            const updatedTransactions = state.transacciones.map((transaction) =>
-                transaction.id === updatedTransaction.id
-                    ? { ...updatedTransaction, amount: parseFloat(updatedTransaction.amount.toString()) } // Convertir a número
-                    : transaction
-            );
-    
-            const newGastado = updatedTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-            const newProgress = (newGastado / state.budget) * 100;
-            const newDisponible = state.budget - newGastado;
-    
-            const newState = {
-                ...state,
-                transacciones: updatedTransactions,
-                gastado: newGastado,
-                disponible: newDisponible,
-                progress: newProgress,
-            };
-    
-            localStorage.setItem("budgetState", JSON.stringify(newState));
-            return newState;
-        }),
-
-    deleteTransaction: (transactionId: string) =>
-        set((state) => {
-            const filteredTransactions = state.transacciones.filter((transaction) => transaction.id !== transactionId);
-
-            const newGastado = filteredTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-            const newProgress = (newGastado / state.budget) * 100;
-            const newDisponible = state.budget - newGastado;
-
-            const newState = {
-                ...state,
-                transacciones: filteredTransactions,
-                gastado: newGastado,
-                disponible: newDisponible,
-                progress: newProgress,
-            };
-
-            localStorage.setItem("budgetState", JSON.stringify(newState));
-            return newState;
-        }),
+                const newTransaction = {
+                    ...transaction,
+                    id: uuidv4(),
+                };
+        
+                const newGastado = state.gastado + transactionAmount
+                const newDisponible = state.disponible - transactionAmount;
+                const newProgress = (newGastado / state.budget) * 100;
+        
+                const newState = {
+                    ...state,
+                    transacciones: [...state.transacciones, newTransaction],
+                    gastado: newGastado,
+                    disponible: newDisponible,
+                    progress: newProgress,
+                };
+        
+                localStorage.setItem("budgetState", JSON.stringify(newState));
+                return newState;
+            }),
+        
+        editTransaction: (updatedTransaction) =>
+            set((state) => {
+                const prevTransaction = state.transacciones.find(
+                    (transaction) => transaction.id === updatedTransaction.id
+                );
+                if (!prevTransaction) return state;
+        
+                const prevAmount =
+                    prevTransaction.type === "Gasto"
+                        ? prevTransaction.amount
+                        : -prevTransaction.amount;
+                const newAmount =
+                    updatedTransaction.type === "Gasto"
+                        ? updatedTransaction.amount
+                        : -updatedTransaction.amount;
+        
+                const diffAmount = newAmount - prevAmount;
+        
+                const newGastado =
+                    updatedTransaction.type === "Gasto"
+                        ? state.gastado + diffAmount
+                        : state.gastado - diffAmount;
+                const newDisponible = state.budget - newGastado;
+                const newProgress = (newGastado / state.budget) * 100;
+        
+                const updatedTransactions = state.transacciones.map((transaction) =>
+                    transaction.id === updatedTransaction.id
+                        ? updatedTransaction
+                        : transaction
+                );
+        
+                const newState = {
+                    ...state,
+                    transacciones: updatedTransactions,
+                    gastado: newGastado,
+                    disponible: newDisponible,
+                    progress: newProgress,
+                };
+        
+                localStorage.setItem("budgetState", JSON.stringify(newState));
+                return newState;
+            }),
+        
+        deleteTransaction: (transactionId: string) =>
+            set((state) => {
+                const transactionToDelete = state.transacciones.find(
+                    (transaction) => transaction.id === transactionId
+                );
+                if (!transactionToDelete) return state;
+        
+                const transactionAmount =
+                    transactionToDelete.type === "Gasto"
+                        ? transactionToDelete.amount
+                        : -transactionToDelete.amount;
+        
+                const newGastado = state.gastado - transactionAmount
+                const newDisponible = state.budget - newGastado;
+                const newProgress = (newGastado / state.budget) * 100;
+        
+                const filteredTransactions = state.transacciones.filter(
+                    (transaction) => transaction.id !== transactionId
+                );
+        
+                const newState = {
+                    ...state,
+                    transacciones: filteredTransactions,
+                    gastado: newGastado,
+                    disponible: newDisponible,
+                    progress: newProgress,
+                };
+        
+                localStorage.setItem("budgetState", JSON.stringify(newState));
+                return newState;
+            }),
+        
         
 
     deleteBudget: () =>

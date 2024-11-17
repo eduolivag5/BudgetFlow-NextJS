@@ -1,13 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import AddTransactionForm from "../transactions/addTransactionForm";
-import { Button, Card, CardBody, CardHeader, Input, Progress } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Input, Progress } from "@nextui-org/react";
 import useBudgetStore from "../../store/useBudgetStore";
 import { FaSave, FaTrash } from "react-icons/fa";
-import { MdAdd } from "react-icons/md";
 import ConfirmationModal from "../../components/ConfirmationModal";
-import TransactionsList from "../transactions/transactionsList";
 import TransactionsListTable from "../transactions/transactionsListTable";
 
 const BudgetPage = () => {
