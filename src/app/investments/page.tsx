@@ -1,6 +1,5 @@
 "use client"
 
-import React from 'react'
 import IndexesTable from './IndexesTable'
 import { Card, CardBody, CardHeader } from '@nextui-org/react'
 
