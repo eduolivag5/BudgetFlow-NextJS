@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Chip, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Select, SelectItem, Pagination } from '@nextui-org/react';
-import marketIndexes from '../../data/markets';
+import {marketIndexes} from '../../data/markets';
 
 export default function IndexesTable() {
     const [searchTerm, setSearchTerm] = useState('');
