@@ -1,20 +1,13 @@
 "use client"
 
-import React, { useState, useMemo, useCallback } from "react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination, Input, Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem, SharedSelection, ChipProps, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { useState, useMemo, useCallback } from "react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination, Input, Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem, SharedSelection, ChipProps } from "@nextui-org/react";
 import { FaEdit, FaTrash, FaArrowDown } from "react-icons/fa";
 import useBudgetStore from "@/store/useBudgetStore";
 import AddTransactionForm from "./addTransactionForm";
 import { MdAdd } from "react-icons/md";
 import ConfirmationModal from "@/components/ConfirmationModal";
-
-const columns = [
-  { name: "FECHA", uid: "date" },
-  { name: "TIPO", uid: "type", sortable: true },
-  { name: "DESCRIPCION", uid: "description", sortable: true },
-  { name: "CANTIDAD", uid: "amount", sortable: true },  
-  { name: "ACCIONES", uid: "actions" }
-];
+import { Transaction } from "@/types";
 
 const typeOptions = [
   { name: "Gasto", uid: "Gasto" },
@@ -31,7 +24,7 @@ export default function TransactionsListTable() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<Set<string>>(new Set());
   const { transacciones, deleteTransaction } = useBudgetStore();
-  const [transactionToEdit, setTransactionToEdit] = useState(null);
+  const [transactionToEdit, setTransactionToEdit] = useState<Transaction|null>(null);
   const [transactionToDelete, setTransactionToDelete] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -76,7 +69,7 @@ export default function TransactionsListTable() {
       setIsDeleteModalOpen(false);
   };
 
-  const handleEditTransaction = (transaction: any) => {
+  const handleEditTransaction = (transaction: Transaction) => {
       setTransactionToEdit(transaction);
       setIsEditModalOpen(true);
   };

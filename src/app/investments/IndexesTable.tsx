@@ -2,9 +2,11 @@
 
 import { useMemo, useState } from 'react';
 import { Chip, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Select, SelectItem, Pagination } from '@nextui-org/react';
+import {marketIndexes} from '../../data/markets'
+
 
 export default function IndexesTable() {
-    /*const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [assetType, setAssetType] = useState('');
 
     const [page, setPage] = useState(1);
@@ -48,6 +50,7 @@ export default function IndexesTable() {
                 </Select>
             </div>
 
+            {/* Verifica si no hay resultados y muestra el mensaje */}
             {filteredMarkets.length === 0 ? (
                 <p className="text-center text-gray-500 py-4">No existen resultados para tu búsqueda.</p>
             ) : (
@@ -100,9 +103,5 @@ export default function IndexesTable() {
 
             <p className='text-right text-sm text-gray-500'>(*) Estos datos no se actualizan.</p>
         </div>
-    );*/
-
-    return (
-      <span>prueba</span>
-    )
+    );
 }
