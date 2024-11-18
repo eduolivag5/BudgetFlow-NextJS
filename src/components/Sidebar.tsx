@@ -13,7 +13,6 @@ interface SidebarProps {
 }
 
 export function Sidebar({ open, setOpen }: SidebarProps) {
-
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
@@ -43,12 +42,14 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
               key={index}
               className={`p-2 cursor-pointer text-sm items-center`}
             >
-              <Link className={`flex gap-4 items-center ${pathname == Menu.link && "text-primary font-semibold"}`}
-                href={Menu.link}>
+              <Link
+                className={`flex gap-4 items-center ${pathname == Menu.link && "text-primary font-semibold"}`}
+                href={Menu.link}
+                onClick={() => setOpen(false)} // Cerrar el Sidebar al hacer clic
+              >
                 <span className="text-lg">{Menu.icon}</span>
                 <span>{Menu.title}</span>
               </Link>
-              
             </li>
           ))}
         </ul>

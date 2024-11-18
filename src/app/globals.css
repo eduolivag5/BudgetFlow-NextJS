@@ -4,6 +4,7 @@
 
 html, body {
   margin: 0; /* Asegura que no haya márgenes predeterminados */
+  scroll-behavior: smooth;
 }
 
 * {
@@ -22,4 +23,34 @@ html.dark {
   background: linear-gradient(to bottom, #000000 0%, #02021b 100%);
   background-size: 100% 100%; /* Evita la repetición del fondo */
   min-height: 100%; /* Asegura que el fondo se extienda a toda la altura */
+}
+
+
+
+
+/* Personalización para navegadores basados en WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* La mitad del ancho predeterminado (generalmente 16px) */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Puedes ajustar el color del track si lo deseas */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4F46E5; /* Color lila */
+  border-radius: 4px; /* Bordes redondeados */
+  border: 2px solid transparent; /* Opcional: espacio alrededor para resaltar el redondeo */
+  background-clip: padding-box; /* Asegura que el borde redondeado se aplique correctamente */
+}
+
+/* Eliminar las flechas de desplazamiento */
+::-webkit-scrollbar-button {
+  display: none; /* Oculta las flechas */
+}
+
+/* Personalización para Firefox */
+* {
+  scrollbar-width: thin; /* Hace la scrollbar más fina */
+  scrollbar-color: #4F46E5 transparent; /* Color de la barra y del track */
 }

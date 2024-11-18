@@ -30,8 +30,8 @@ export default function IndexesTable() {
                 <Input
                     radius='sm'
                     className='flex-1'
-                    label="Nombre del activo"
-                    placeholder='Buscar por nombre'
+                    label="Nombre"
+                    placeholder='Nombre'
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
