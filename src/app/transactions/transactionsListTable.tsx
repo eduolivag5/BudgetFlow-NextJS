@@ -8,6 +8,7 @@ import AddTransactionForm from "./addTransactionForm";
 import { MdAdd } from "react-icons/md";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Transaction } from "@/types";
+import { useSettingsStore } from "@/store/settingsStore";
 
 const typeOptions = [
   { name: "Gasto", uid: "Gasto" },
@@ -28,6 +29,8 @@ export default function TransactionsListTable() {
   const [transactionToDelete, setTransactionToDelete] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const { currency } = useSettingsStore()
 
   const rowsPerPage = 5;
 
@@ -157,7 +160,7 @@ export default function TransactionsListTable() {
                             <TableCell className="hidden md:table-cell text-xs">{transaction.description}</TableCell>
                             <TableCell className="text-xs">
                                 <div className="flex flex-col gap-1">
-                                    <span className="font-semibold">{Number(transaction.amount).toFixed(2)}</span>
+                                    <span className="font-semibold">{Number(transaction.amount).toFixed(2)} {currency}</span>
                                     <span className="md:hidden text-gray-500">{transaction.description}</span>
                                 </div>                                    
                             </TableCell>

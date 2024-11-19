@@ -1,3 +1,4 @@
+import { useSettingsStore } from '@/store/settingsStore';
 import useBudgetStore from '@/store/useBudgetStore';
 import { Chip, ChipProps, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React from 'react';
@@ -9,8 +10,8 @@ const typeColorMap: Record<string, ChipProps["color"]> = {
 
 export default function LastTransactions() {
   const { transacciones } = useBudgetStore();
-
-  // Ordenar las transacciones por fecha descendente (de la más reciente a la más antigua)
+  const { currency } = useSettingsStore();
+  
   const sortedTransactions = [...transacciones].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
@@ -28,7 +29,7 @@ export default function LastTransactions() {
                           {transaction.type}
                       </Chip>
                     </TableCell>
-                    <TableCell className='text-xs'>{transaction.amount.toFixed(2)} €</TableCell>
+                    <TableCell className='text-xs'>{transaction.amount.toFixed(2)} {currency}</TableCell>
                     <TableCell className='text-xs'>{transaction.date}</TableCell>
                 </TableRow>
             ))}

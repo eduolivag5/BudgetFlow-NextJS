@@ -37,7 +37,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
             {/* Contenido principal */}
             <main
-              className={`mt-10 p-2 md:p-8 w-full transition-all duration-300 ${sidebarOpen && "md:ml-72"}`}
+              className={`mt-14 md:mt-10 p-2 md:p-8 w-full transition-all duration-300 ${sidebarOpen && "md:ml-72"}`}
             >              
               <div className="2xl:w-2/3 2xl:mx-auto w-full mb-10">
                 {children}

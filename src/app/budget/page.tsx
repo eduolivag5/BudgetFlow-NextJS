@@ -6,9 +6,11 @@ import useBudgetStore from "../../store/useBudgetStore";
 import { FaSave, FaTrash } from "react-icons/fa";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import TransactionsListTable from "../transactions/transactionsListTable";
+import { useSettingsStore } from "@/store/settingsStore";
 
 const BudgetPage = () => {
     const { budget, disponible, gastado, progress, setBudget, deleteBudget } = useBudgetStore();
+    const { currency } = useSettingsStore()
     
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
@@ -79,12 +81,12 @@ const BudgetPage = () => {
                         <div className="flex justify-around text-center items-center">
                             <div className="flex flex-col items-center">
                                 <p className="font-semibold text-sm md:text-lg uppercase">Gastado</p>
-                                <span className="md:text-lg font-medium text-gray-500">{gastado.toFixed(2)} €</span>
+                                <span className="md:text-lg font-medium text-gray-500">{gastado.toFixed(2)} {currency}</span>
                             </div>
                             <div className="flex flex-col items-center">
                                 <p className="font-semibold text-sm md:text-lg uppercase">Disponible</p>
                                 <span className={`md:text-lg font-medium ${disponible <= 0 ? 'text-red-500' : 'text-gray-500' }`}>
-                                    {disponible.toFixed(2)} €
+                                    {disponible.toFixed(2)} {currency}
                                 </span>
                             </div>
                         </div>
