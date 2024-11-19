@@ -1,10 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BsArrowBarLeft } from "react-icons/bs";
-import { HiOutlineMenu } from "react-icons/hi"; // Icono hamburguesa
+import { HiOutlineMenu } from "react-icons/hi"; 
 
 interface NavbarProps {
   open: boolean;
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>; // Tipo correcto para setState
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>; 
 }
 
 export function Navbar({ open, setSidebarOpen }: NavbarProps) {
@@ -15,15 +16,15 @@ export function Navbar({ open, setSidebarOpen }: NavbarProps) {
       <div>
         <button
           className="p-2 cursor-pointer text-3xl"
-          onClick={() => setSidebarOpen((prev) => !prev)} // Alternando el valor booleano
+          onClick={() => setSidebarOpen((prev) => !prev)} 
         >
           {!open ? <HiOutlineMenu /> : <BsArrowBarLeft />}
         </button>
       </div>
 
-      {/* Logo */}
+      {/* Logo */}      
       <Link href="/">
-        <img src="./logo.svg" className="h-10" />
+        <Image alt="logo" width={40} height={40} src="./logo.svg" />
       </Link>
     </div>
   );

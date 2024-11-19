@@ -1,8 +1,8 @@
 // routes.ts
-import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineSetting } from "react-icons/ai";
 import { BsClipboardData, BsInfoCircle } from "react-icons/bs";
 import { MdOutlineTrendingUp } from "react-icons/md";
-import { FaHandHoldingUsd, FaCalculator } from "react-icons/fa";
+import { FaCalculator } from "react-icons/fa";
   
 export const Menus = [
     { title: "Inicio", link: "/", icon: <AiOutlineHome /> },
