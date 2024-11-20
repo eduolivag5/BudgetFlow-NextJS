@@ -11,7 +11,7 @@ interface NavbarProps {
 export function Navbar({ open, setSidebarOpen }: NavbarProps) {
 
   return (
-    <div className="pr-4 w-full flex items-center h-16 p-3 justify-between fixed top-0 left-0 z-40">
+    <div className="bg-background pr-4 w-full flex items-center h-16 p-3 justify-between fixed top-0 left-0 z-40">
       {/* Icono del Hamburguesa */}
       <div>
         <button
